@@ -1,9 +1,32 @@
 #pragma once
 
+#if not ENABLE_ALSA
+#include "modules/meta/unsupported_module.hpp"
+#else
 #include "modules/meta/event_module.hpp"
+#endif
 #include "settings.hpp"
 
 POLYBAR_NS
+
+namespace modules {
+  class alsa_base {
+    public:
+    static constexpr auto TYPE = "internal/alsa";
+    explicit alsa_base() {
+      throw application_error("No built-in support for '" + string{TYPE} + "'");
+    }
+  };
+}
+
+#if not ENABLE_ALSA
+namespace modules {
+  class alsa_module : public unsupported_module<alsa_module>, public alsa_base {
+   public:
+    explicit alsa_module(const bar_settings&, string, const config&);
+  };
+}
+#else
 
 // fwd
 namespace alsa {
@@ -28,8 +51,6 @@ namespace modules {
     string get_format() const;
     string get_output();
     bool build(builder* builder, const string& tag) const;
-
-    static constexpr auto TYPE = "internal/alsa";
 
     static constexpr auto EVENT_INC = "inc";
     static constexpr auto EVENT_DEC = "dec";
@@ -72,5 +93,6 @@ namespace modules {
     atomic<int> m_volume{0};
   };
 }  // namespace modules
+#endif
 
 POLYBAR_NS_END

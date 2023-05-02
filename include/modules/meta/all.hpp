@@ -31,9 +31,7 @@
 #if ENABLE_NETWORK
 #include "modules/network.hpp"
 #endif
-#if ENABLE_ALSA
 #include "modules/alsa.hpp"
-#endif
 #if ENABLE_PULSEAUDIO
 #include "modules/pulseaudio.hpp"
 #endif

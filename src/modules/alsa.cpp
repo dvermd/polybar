@@ -17,6 +17,11 @@ using namespace alsa;
 namespace modules {
   template class module<alsa_module>;
 
+#if not ENABLE_ALSA
+  alsa_module::alsa_module(const bar_settings& bar, string name_, const config& config)
+      : unsupported_module<alsa_module>(bar, move(name_), config) {
+      }
+#else
   alsa_module::alsa_module(const bar_settings& bar, string name_, const config& config)
       : event_module<alsa_module>(bar, move(name_), config) {
     if (m_handle_events) {
@@ -294,6 +299,8 @@ namespace modules {
 
     return mixers;
   }
+
+#endif
 } // namespace modules
 
 POLYBAR_NS_END

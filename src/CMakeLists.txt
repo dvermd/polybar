@@ -10,7 +10,6 @@ get_sources_dirs(src_dir)
 set(ALSA_SOURCES
   ${src_dir}/adapters/alsa/control.cpp
   ${src_dir}/adapters/alsa/mixer.cpp
-  ${src_dir}/modules/alsa.cpp
   )
 
 set(GITHUB_SOURCES ${src_dir}/modules/github.cpp ${src_dir}/utils/http.cpp)
@@ -139,6 +138,7 @@ set(POLY_SOURCES
   ${src_dir}/x11/winspec.cpp
   ${src_dir}/x11/xembed.cpp
 
+  ${src_dir}/modules/alsa.cpp
   $<$<BOOL:${ENABLE_ALSA}>:${ALSA_SOURCES}>
   $<$<BOOL:${ENABLE_CURL}>:${GITHUB_SOURCES}>
   $<$<BOOL:${ENABLE_I3}>:${I3_SOURCES}>
